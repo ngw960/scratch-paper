@@ -1,0 +1,99 @@
+/* 기본 바디 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* 배경 색 */
+    color: #333; /* 텍스트 색 */
+    padding: 20px;
+    margin: 0;
+}
+
+/* 제목 스타일 */
+h2 {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* 뒤로가기 버튼 스타일 */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    color: #FFFFFF;
+    background-color: #333333;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #000000;
+}
+
+/* 폼 스타일 */
+form {
+    background-color: #fff;
+    padding: 20px;  /* form 내부 여백 */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+    box-sizing: border-box;  /* padding을 포함하여 너비 계산 */
+}
+
+form ul {
+    margin-bottom: 15px;
+    list-style: none;
+}
+
+/* 입력 칸 스타일 */
+form input {
+    width: calc(100% - 20px);  /* form의 좌우 여백을 제외한 나머지 너비 */
+    padding: 10px;  /* 좌우 여백 */
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;  /* padding 포함하여 너비 계산 */
+}
+
+form input[readonly] {
+    background-color: #f0f0f0;
+}
+
+form button {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #555;
+}
+
+/* 게시물 목록 */
+ul {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+ul a {
+    color: #000;
+    text-decoration: none;
+}
+
+ul a:hover {
+    text-decoration: underline;
+}
+
+/* 구분선 */
+hr {
+    border: 1px solid #ddd;
+    margin: 20px 0;
+}

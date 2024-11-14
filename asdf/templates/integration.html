@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+</head>
+<body>
+
+
+<!-- Index_Page -->
+{% if trigger_index %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <h2>INDEX</h2>
+
+    {% if request.user.id %}
+        <div class="navigation">
+            <div class="top-menu">
+                <a href="{% url 'Board_Page' %}">게시판</a>
+                <a href="{% url 'Myaccount_Page' %}">내 계정</a>
+                <a href="{% url 'Message_Box_Page' %}">쪽지함</a>
+                <a href="{% url 'Ranking_Page' %}">랭킹</a>
+                <a href="{% url 'Shop_Page' %}">상점</a>
+                <a href="{% url 'Equipment_Page' %}">장비 페이지</a>
+                <a href="{% url 'Blacksmith_Page' %}">대장간</a>
+            </div>
+            <a href="{% url 'Mushroom_Page' %}">버섯캐기</a>
+            <a href="{% url 'Blackjack_Page' %}">블랙잭(미완성)</a>
+            <a href="{% url 'Rock_Paper_Scissors_Page' %}">가위바위보</a>
+            <div class="login-logout">
+                <div class="welcome-message">
+                    {{ request.user.name }} 님 환영합니다.
+                </div>
+                <a href="{% url 'Logout' %}">로그아웃</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="navigation">
+            <div class="top-menu">
+                <a href="{% url 'Board_Page' %}">게시판</a>
+                <a href="{% url 'Myaccount_Page' %}">내 계정</a>
+                <a href="{% url 'Message_Box_Page' %}">쪽지함</a>
+                <a href="{% url 'Ranking_Page' %}">랭킹</a>
+                <a href="{% url 'Shop_Page' %}">상점</a>
+                <a href="{% url 'Equipment_Page' %}">장비 페이지</a>
+                <a href="{% url 'Blacksmith_Page' %}">대장간</a>
+            </div>
+            <a href="{% url 'Mushroom_Page' %}">버섯캐기</a>
+            <a href="{% url 'Blackjack_Page' %}">블랙잭</a>
+            <a href="{% url 'Rock_Paper_Scissors_Page' %}">가위바위보</a>
+            <div class="login-logout">
+                <div class="login-message">로그인 해주세요</div>
+                <a href="{% url 'Login_Page' %}">로그인</a>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
+
+
+
+<!-- Signup_Page -->
+    {% if trigger_signup %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <h2>회원가입</h2>
+    <a href="{% url 'Index_Page' %}">메인페이지</a>
+    <form action="{% url 'Signup_Action' %}" method="post">
+        {% csrf_token %}
+        <ul>
+            <li><input type="text" name="input_user_id" placeholder="아이디"></li>
+        </ul>
+        <ul>
+            <li><input type="password" name="input_password" placeholder="비밀번호"></li>
+        </ul>
+        <ul>
+            <li><input type="text" name="input_name" placeholder="이름"></li>
+        </ul>
+        <ul>
+            <li><input type="email" name="input_email" placeholder="이메일"></li>
+        </ul>
+        <ul>
+            <li><button type="submit">회원가입</button></li>
+        </ul>
+    </form>
+    {% endif %}
+
+
+<!-- Login_Page -->
+    {% if trigger_login %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <h2>로그인</h2>
+    <form action = "{% url 'Login_Action' %}" method = "post">
+        {% csrf_token %}
+        <ul>
+            <input type = "text", name = "input_user_id", placeholder = "id">
+        </ul>
+        <ul>
+            <input type= "password", name = "input_password", placeholder = "password">
+        </ul>
+        <ul>
+            <button type = "submit">로그인</button>
+        </ul>
+        <ul>
+            <a href = "{% url 'Signup_Page' %}">회원가입</a>
+        </ul>
+    </form>
+    {% endif %}
+
+
+
+<!-- Board_Page -->
+{% if trigger_board %}
+    <link rel="stylesheet" href="{% static 'css/board.css' %}">
+    <h2>게시판</h2>
+    <a href="{% url 'Index_Page' %}" class="back-button">뒤로가기</a>
+    <div class="button-container">
+        <a href="{% url 'Post_Writing_Page' %}" class="write-post">글쓰기</a>
+    </div>
+    <br>
+    <hr>
+    <table class="post-table">
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>작성자</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+                <tr>
+                    <td class="post-title"><a href="{% url 'Post_Detail_Page' post.id %}">{{ post.title }}</a></td>
+                    <td class="post-author"><a href="{% url 'User_Detail_Page' post.user.id %}">{{ post.author }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+
+
+
+<!-- Post_Writing_Page -->
+{% if trigger_post_writing %}
+    <link rel="stylesheet" href="{% static 'css/post_writing.css' %}">
+    <h2>글쓰기</h2>
+    <a href="{% url 'Board_Page' %}" class="back-button">뒤로가기</a>
+
+    <form action="{% url 'Post_Writing_Action' %}" method="post" class="post-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="input_title">제목</label>
+            <input type="text" name="input_title" id="input_title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="input_content">내용</label>
+            <textarea name="input_content" id="input_content" required></textarea>
+        </div>
+
+        <input type="hidden" name="input_author" value="{{ name }}">
+
+        <button type="submit" class="submit-button">제출하기</button>
+    </form>
+{% endif %}
+
+
+
+<!-- Post_Detail_Page -->
+{% if trigger_post_detail %}
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+    <h2>글 내용</h2>
+    <a href="{% url 'Board_Page' %}" class="back-button">뒤로가기</a>
+    <div class="post-detail-container">
+        <p class="post-content">{{ post.content }}</p>
+    </div>
+    {% if post.user.id == request.user.id %}
+        <form action="{% url 'Delete_Post' post.id %}" method="post" class="delete-form">
+            {% csrf_token %}
+            <button type="submit" class="delete-button">삭제하기</button>
+        </form>
+    {% endif %}
+{% endif %}
+
+
+
+<!-- Myaccount_Page -->
+{% if trigger_myaccount %}
+    <link rel="stylesheet" href="{% static 'css/myaccount.css' %}">
+    <h2>회원 정보</h2>
+    <a href="{% url 'Index_Page' %}" class="back-button">뒤로가기</a>
+
+    <form action="{% url 'Edit_Info' %}" method="post">
+        {% csrf_token %}
+        <ul>
+            아이디 <input type="text" name="input_user_id" value="{{ request.user.user_id }}" readonly>
+        </ul>
+        <ul>
+            이름 <input type="text" name="input_name" value="{{ request.user.name }}">
+        </ul>
+        <ul>
+            이메일 <input type="email" name="input_email" value="{{ request.user.email }}" readonly>
+        </ul>
+        <ul>
+            <button type="submit">수정하기</button>
+        </ul>
+    </form>
+
+    <br>
+    <h2>내가 작성한 글</h2>
+    <hr>
+    {% for post in posts %}
+        <ul>
+            제목: <a href="{% url 'Post_Detail_Page' post.id %}">{{ post.title }}</a>
+        </ul>
+        <hr>
+    {% endfor %}
+{% endif %}
+
+
+
+<!-- User_Detail_Page -->
+{% if trigger_user_detail %}
+    <link rel="stylesheet" href="{% static 'css/user_detail.css' %}">
+    <h2>사용자 정보</h2>
+    <a href="{% url 'Board_Page' %}" class="back-button">뒤로가기</a>
+    <table class="user-detail-table">
+        <tbody>
+            <tr>
+                <td><strong>아이디:</strong></td>
+                <td>{{ user.user_id }}</td>
+            </tr>
+            <tr>
+                <td><strong>이름:</strong></td>
+                <td>{{ user.name }}</td>
+            </tr>
+            <tr>
+                <td><strong>이메일:</strong></td>
+                <td>{{ user.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endif %}
+
+
+
+
+<!-- Message_Box_Page -->
+    {% if trigger_message_box %}
+    <h2>쪽지함</h2>
+    <a href = "{% url 'Index_Page' %}">뒤로가기</a>
+    <ul>
+        <a href = "{% url 'Message_Writing_Page' %}">쪽지 보내기</a>
+    </ul>
+    <hr>
+    {% for message in messages %}
+        {% if message.recipient == request.user.user_id %}
+            <ul>
+                제목 : <a href = "{% url 'Message_Detail_Page' message.id %}">{{ message.title }}</a>
+                보낸사람 : {{ message.user.user_id }}
+            </ul>
+            <hr>
+        {% endif %}
+    {% endfor %}
+    <br>
+    내가 보낸 쪽지
+    <br><br>
+    {% for message in sent_messages %}
+        <ul>
+            제목 : <a href = "{% url 'Message_Detail_Page' message.id %}">{{ message.title }}</a>
+        </ul>
+    {% endfor %}
+
+    {% endif %}
+
+
+
+<!-- Message_Writing_Page -->
+    {% if trigger_message_writing %}
+    <h2>쪽지 보내기</h2>
+    <a href = "{% url 'Message_Box_Page' %}">뒤로가기</a>
+    <form action = "{% url 'Message_Writing_Action' %}" method = "post">
+        {% csrf_token %}
+        <ul>
+            받는사람  <input type = "text" name = "input_recipient">
+        </ul>
+        <ul>
+            제목  <input type = "text" name = "input_title">
+        </ul>
+        <ul>
+            내용  <input type = "text" name = "input_content">
+        </ul>
+        <ul>
+            <button type = "submit">보내기</button>
+        </ul>
+    </form>
+    {% endif %}
+
+
+
+<!-- Message_Detail_Page -->
+    {% if trigger_message_detail %}
+    <h2>쪽지 내용</h2>
+    <a href = "{% url 'Message_Box_Page' %}">뒤로가기</a>
+        <ul>
+            보낸사람 {{ message.user.user_id }}
+        </ul>
+        <ul>
+            제목 {{ message.title }}
+        </ul>
+        <ul>
+            내용 {{ message.content }}
+        </ul>
+        <ul>
+            <a href = "{% url 'Message_Reply_Page' message.user.id %}">답장하기</a>
+        </ul>
+        <ul>
+            <a href = "{% url 'Message_Delete' message.id %}">삭제하기</a>
+        </ul>
+    {% endif %}
+
+
+
+<!-- Message_Reply_Page -->
+    {% if trigger_message_reply %}
+    <h2>답장하기</h2>
+    <a href = "{% url 'Message_Box_Page' %}">뒤로가기</a>
+    <form action = "{% url 'Message_Writing_Action' %}" method = "post">
+        {% csrf_token %}
+        <ul>
+            <input type = "hidden" name = "input_recipient" value = "{{ user.user_id }}">
+        </ul>
+        <ul>
+            제목  <input type = "text" name = "input_title">
+        </ul>
+        <ul>
+            내용  <input type = "text" name = "input_content">
+        </ul>
+        <ul>
+            <button type = "submit">보내기</button>
+        </ul>
+    </form>
+    {% endif %}
+
+
+
+<!-- Ranking_Page -->
+{% if trigger_ranking %}
+    <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
+    <h2>랭킹</h2>
+    <a class="back-button" href="{% url 'Index_Page' %}">뒤로가기</a>
+
+    <table class="ranking-table">
+        <thead>
+            <tr>
+                <th>순위</th>
+                <th>이름</th>
+                <th>최고 아이템 레벨</th>
+                <th>아이템 이미지</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_name, item_level in rankings %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user_name }}</td>
+                    <td>
+                        {{ item_level }}
+                    </td>
+                    <td>
+                        {% if item_level < 6 %}
+                            <img src="{% static 'image/sword_1.webp' %}" alt="Sword Image" width="100">
+                        {% elif item_level < 11 %}
+                            <img src="{% static 'image/sword_2.webp' %}" alt="Sword Image" width="100">
+                        {% elif item_level < 16 %}
+                            <img src="{% static 'image/sword_3.webp' %}" alt="Sword Image" width="100">
+                        {% elif item_level < 21 %}
+                            <img src="{% static 'image/sword_4.webp' %}" alt="Sword Image" width="100">
+                        {% elif item_level < 26 %}
+                            <img src="{% static 'image/sword_5.webp' %}" alt="Sword Image" width="100">
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+
+
+
+<!-- Shop_Page -->
+{% if trigger_shop %}
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+        <div class="page-header">
+            <h2 class="shop-title">상점</h2>
+            <a class="back-button" href="{% url 'Index_Page' %}">뒤로가기</a>
+        </div>
+
+        <div class="user-info">
+            <p><strong>소지금: {{ user.money }}원</strong></p>
+        </div>
+
+        <h3>판매 아이템</h3>
+        <div class="item-list">
+            <div class="item">
+                <img src="{% static 'image/sword_1.webp' %}" alt="" width="100">
+                <p><strong>검 + 1</strong></p>
+                <a class="buy-button" href="{% url 'Shop_Buy_Sword' %}">1000원</a>
+            </div>
+            <div class="item">
+                <img src="{% static 'image/shield_1.webp' %}" alt="" width="100">
+                <p><strong>방패 + 1</strong></p>
+                <a class="buy-button" href="{% url 'Shop_Buy_Shield' %}">1000원</a>
+            </div>
+            <div class="item">
+                <img src="{% static 'image/armor_1.webp' %}" alt="" width="100">
+                <p><strong>갑옷 + 1</strong></p>
+                <a class="buy-button" href="{% url 'Shop_Buy_Armor' %}">1000원</a>
+            </div>
+            <div class="item">
+                <img src="{% static 'image/protect_potion.webp' %}" alt="" width="100">
+                <p><strong>파괴방지물약</strong></p>
+                <a class="buy-button" href="{% url 'Shop_Buy_Protect_Potion' %}">1,000,000원</a>
+            </div>
+            <div class="item">
+                <img src="{% static 'image/sword_3.webp' %}" alt="" width="100">
+                <p><strong>검 + 15</strong></p>
+                <a class="buy-button" href="{% url 'Shop_Buy_Sword_15' %}">5,000,000원</a>
+            </div>
+            <div class="item">
+                <img src="{% static 'image/shield_2.webp' %}" alt="" width="100">
+                <p><strong>방패 + 15</strong></p>
+                <a class="buy-button" href="{% url 'Shop_Buy_Shield_15' %}">5,000,000원</a>
+            </div>
+        </div>
+
+        <br><br>
+        <h3>보유중인 아이템</h3>
+        <div class="owned-items">
+            {% for item in items %}
+                <div class="owned-item">
+                    <p>{{ item.item_name }} + {{ item.item_level }} <a class="sell-button" href="{% url 'Shop_Sell' item.id %}">팔기</a></p>
+                    <p>판매가격: <strong>{{ item.value }}원</strong></p>
+                </div>
+            {% endfor %}
+        </div>
+{% endif %}
+
+
+
+<!-- Equipment_Page -->
+{% if trigger_equipment %}
+    <link rel="stylesheet" href="{% static 'css/equipment.css' %}">
+
+    <div class="page-header">
+        <h2 class="equipment-title">장비 페이지</h2>
+        <a href="{% url 'Index_Page' %}" class="back-button">뒤로가기</a>
+    </div>
+
+    <div class="user-info">
+        <h3>내 정보</h3>
+        <p><strong>공격력: {{ user_attack }}</strong></p>
+        <p><strong>방어력: {{ user_defense }}</strong></p>
+        <p><strong>체력: {{ user_health }}</strong></p>
+    </div>
+
+    <div class="equipped-items">
+        <h3>장착중인 아이템</h3>
+
+        <div class="item">
+            {% if equipped_sword %}
+                {% if equipped_sword.item_level < 6 %}
+                    <img src="{% static 'image/sword_1.webp' %}" alt="" width="100" id="item_image">
+                {% elif equipped_sword.item_level < 11 %}
+                    <img src="{% static 'image/sword_2.webp' %}" alt="" width="100" id="item_image">
+                {% elif equipped_sword.item_level < 16 %}
+                    <img src="{% static 'image/sword_3.webp' %}" alt="" width="100" id="item_image">
+                {% elif equipped_sword.item_level < 21 %}
+                    <img src="{% static 'image/sword_4.webp' %}" alt="" width="100" id="item_image">
+                {% elif equipped_sword.item_level < 26 %}
+                    <img src="{% static 'image/sword_5.webp' %}" alt="" width="100" id="item_image">
+                {% endif %}
+                <p class="item-name"><strong>{{ equipped_sword.item_name }} + {{ equipped_sword.item_level }}</strong></p>
+            {% else %}
+                미장착
+            {% endif %}
+        </div>
+
+        <div class="item">
+            {% if equipped_shield %}
+                {% if equipped_shield.item_level < 11 %}
+                    <img src="{% static 'image/shield_1.webp' %}" alt="" width="100" id="item_image">
+                {% elif equipped_shield.item_level < 21 %}
+                    <img src="{% static 'image/shield_2.webp' %}" alt="" width="100" id="item_image">
+                {% elif equipped_shield.item_level < 26 %}
+                    <img src="{% static 'image/shield_3.webp' %}" alt="" width="100" id="item_image">
+                {% endif %}
+                <p class="item-name"><strong>{{ equipped_shield.item_name }} + {{ equipped_shield.item_level }}</strong></p>
+            {% else %}
+                미장착
+            {% endif %}
+        </div>
+
+        <div class="item">
+            {% if equipped_armor %}
+                {% if equipped_shield.item_level < 11 %}
+                    <img src="{% static 'image/armor_1.webp' %}" alt="" width="100" id="item_image">
+                {% elif equipped_shield.item_level < 21 %}
+                    <img src="{% static 'image/armor_2.webp' %}" alt="" width="100" id="item_image">
+                {% elif equipped_shield.item_level < 26 %}
+                    <img src="{% static 'image/armor_3.webp' %}" alt="" width="100" id="item_image">
+                {% endif %}
+                <p class="item-name"><strong>{{ equipped_armor.item_name }} + {{ equipped_armor.item_level }}</strong></p>
+            {% else %}
+                미장착
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="owned-items">
+        <h3>보유중인 아이템</h3>
+
+        <h4>Sword</h4>
+        <div class="item-list">
+            {% for item in items %}
+                {% if item.category == 'sword' %}
+                    <div class="item">
+                        {% if item.item_level < 6 %}
+                        <img src="{% static 'image/sword_1.webp' %}" alt="" width="100" id="item_image">
+                        {% elif item.item_level < 11 %}
+                        <img src="{% static 'image/sword_2.webp' %}" alt="" width="100" id="item_image">
+                        {% elif item.item_level < 16 %}
+                        <img src="{% static 'image/sword_3.webp' %}" alt="" width="100" id="item_image">
+                        {% elif item.item_level < 21 %}
+                        <img src="{% static 'image/sword_4.webp' %}" alt="" width="100" id="item_image">
+                        {% elif item.item_level < 26 %}
+                        <img src="{% static 'image/sword_5.webp' %}" alt="" width="100" id="item_image">
+                        {% endif %}
+                        <p class="item-name"><strong>{{ item.item_name }} + {{ item.item_level }}</strong></p>
+                        {% if not item.equip %}
+                            <a class="equip-button" href="{% url 'Equip_Item' item.id %}">장착하기</a>
+                        {% else %}
+                            <span class="equipped">(착용중)</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <h4>Shield</h4>
+        <div class="item-list">
+            {% for item in items %}
+                {% if item.category == 'shield' %}
+                    <div class="item">
+                        {% if item.item_level < 11 %}
+                            <img src="{% static 'image/shield_1.webp' %}" alt="" width="100" id="item_image">
+                        {% elif item.item_level < 21 %}
+                            <img src="{% static 'image/shield_2.webp' %}" alt="" width="100" id="item_image">
+                        {% elif item.item_level < 26 %}
+                            <img src="{% static 'image/shield_3.webp' %}" alt="" width="100" id="item_image">
+                        {% endif %}
+                        <p class="item-name"><strong>{{ item.item_name }} + {{ item.item_level }}</strong></p>
+                        {% if not item.equip %}
+                            <a class="equip-button" href="{% url 'Equip_Item' item.id %}">장착하기</a>
+                        {% else %}
+                            <span class="equipped">(착용중)</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <h4>Armor</h4>
+        <div class="item-list">
+            {% for item in items %}
+                {% if item.category == 'armor' %}
+                    <div class="item">
+                        {% if item.item_level < 11 %}
+                            <img src="{% static 'image/armor_1.webp' %}" alt="" width="100" id="item_image">
+                        {% elif item.item_level < 21 %}
+                            <img src="{% static 'image/armor_2.webp' %}" alt="" width="100" id="item_image">
+                        {% elif item.item_level < 26 %}
+                            <img src="{% static 'image/armor_3.webp' %}" alt="" width="100" id="item_image">
+                        {% endif %}
+                        <p class="item-name"><strong>{{ item.item_name }} + {{ item.item_level }}</strong></p>
+                        {% if not item.equip %}
+                            <a class="equip-button" href="{% url 'Equip_Item' item.id %}">장착하기</a>
+                        {% else %}
+                            <span class="equipped">(착용중)</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+
+
+<!-- Blacksmith_Page -->
+{% if trigger_blacksmith %}
+    <link rel="stylesheet" href="{% static 'css/blacksmith.css' %}">
+
+    <video class="video-background" autoplay muted loop playsinline>
+        <source src="{% static 'video/blacksmith.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="page-header">
+        <h2 class="blacksmith-title">대장간</h2>
+        <a href="{% url 'Index_Page' %}" class="back-button">뒤로가기</a>
+    </div>
+
+    <div class="user_money">
+        <p><strong>소지금 : </strong><strong id="money">{{ user.money }}</strong>원</p>
+    </div>
+
+    <div class="page-content">
+        <div class="upgrade-item">
+            <h3>강화할 아이템</h3>
+            {% if selected_item %}
+                <div class="item-display">
+                    {% if selected_item.item_level < 6 and selected_item.category == 'sword' %}
+                        <img src="{% static 'image/sword_1.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 11 and selected_item.category == 'sword' %}
+                        <img src="{% static 'image/sword_2.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 16 and selected_item.category == 'sword' %}
+                        <img src="{% static 'image/sword_3.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 21 and selected_item.category == 'sword' %}
+                        <img src="{% static 'image/sword_4.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 26 and selected_item.category == 'sword' %}
+                        <img src="{% static 'image/sword_5.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 11 and selected_item.category == 'shield' %}
+                        <img src="{% static 'image/shield_1.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 21 and selected_item.category == 'shield' %}
+                        <img src="{% static 'image/shield_2.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 26 and selected_item.category == 'shield' %}
+                        <img src="{% static 'image/shield_3.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 11 and selected_item.category == 'armor' %}
+                        <img src="{% static 'image/armor_1.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 21 and selected_item.category == 'armor' %}
+                        <img src="{% static 'image/armor_2.webp' %}" alt="" width="100" id="item_image">
+                    {% elif selected_item.item_level < 26 and selected_item.category == 'armor' %}
+                        <img src="{% static 'image/armor_3.webp' %}" alt="" width="100" id="item_image">
+                    {% endif %}
+                    <p id="item-description">{{ selected_item.item_name }} + <span id="item_level">{{ selected_item.item_level }}</span>
+                    {% if selected_item.protected %}
+                        <span id="protection-status">(파괴방지)</span>
+                    {% else %}
+                        <span id="protection-status"></span>
+                    {% endif %}
+                        <span id="max-level-message"></span>
+
+                    <br><br>
+                    {% if selected_item.item_level < 25 %}
+                        <a href="#" class="upgrade-button" data-item-id="{{ selected_item.id }}">강화하기</a>
+                        <a href="#" id="repeatUpgrade" class="upgrade-button">강화 5번</a>
+                    {% else %}
+                        Max_Level
+                    {% endif %}
+                    </p>
+                </div>
+                <p><strong>강화비용 : </strong><strong id="upgrade_cost">{{ selected_item.upgrade_cost }}</strong></p>
+                <p><strong>강화 확률 : </strong><strong id="probability">{{ selected_item.probability }}%</strong></p>
+                <p><strong>아이템 가치 : </strong><strong id="value">{{ selected_item.value }}</strong></p>
+                {% if selected_item.category == 'sword' %}
+                    <p><strong>공격력 : </strong><strong id="item_attack">{{ selected_item.item_attack }}</strong></p>
+                {% elif selected_item.category == 'shield' %}
+                    <p><strong>방어력 : </strong><strong id="item_defense">{{ selected_item.item_defense }}</strong></p>
+                {% elif selected_item.category == 'armor' %}
+                    <p><strong>방어력 : </strong><strong id="item_health">{{ selected_item.item_health }}</strong></p>
+                {% endif%}
+                <p class="warning-text"><strong>⚠️강화 레벨 +20부터는 강화 실패 시 장비가 부숴집니다.</strong></p>
+
+            {% else %}
+                <div class="item-display">
+                    <img src="{% static 'image/anvil.webp' %}" alt="" width="100">
+
+                    <br><br>
+                    <p><strong>밑에서 강화할 아이템을 선택해 주세요</strong></p>
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="user-info">
+            <img src="{% static 'image/protect_potion.webp' %}" alt="Protect Potion" width="100">
+            <p><strong>파괴방지물약 : {{ Number_of_protection_potions }}개</strong>
+            {% if Number_of_protection_potions > 0 and selected_item.id %}
+                <a href="{% url 'Protect_Potion_Use' selected_item.id %}">사용하기</a>
+            {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <br>
+    <div class="owned-items">
+        <h3>보유중인 아이템</h3>
+        <h4>Sword</h4>
+        <div class="item-list">
+            {% for item in equipment_items %}
+                {% if item.category == 'sword' %}
+                    <div class="item">
+                        {% if item.upgrade_select == False %}
+                            {% if item.item_level < 6 %}
+                                <img src="{% static 'image/sword_1.webp' %}" alt="" width="100" id="">
+                            {% elif item.item_level < 11 %}
+                                <img src="{% static 'image/sword_2.webp' %}" alt="" width="100" id="">
+                            {% elif item.item_level < 16 %}
+                                <img src="{% static 'image/sword_3.webp' %}" alt="" width="100" id="">
+                            {% elif item.item_level < 21 %}
+                                <img src="{% static 'image/sword_4.webp' %}" alt="" width="100" id="">
+                            {% elif item.item_level < 26 %}
+                                <img src="{% static 'image/sword_5.webp' %}" alt="" width="100" id="">
+                            {% endif %}
+                            <p class="item-name"><strong>{{ item.item_name }} + {{ item.item_level }}</strong></p>
+                            <a href="{% url 'Blacksmith_Select' item.id %}" class="select-button">선택하기</a>
+                        {% else %}
+                            {% if item.item_level < 6 %}
+                                <img src="{% static 'image/sword_1.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% elif item.item_level < 11 %}
+                                <img src="{% static 'image/sword_2.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% elif item.item_level < 16 %}
+                                <img src="{% static 'image/sword_3.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% elif item.item_level < 21 %}
+                                <img src="{% static 'image/sword_4.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% elif item.item_level < 26 %}
+                                <img src="{% static 'image/sword_5.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% endif %}
+                            <p class="item-name">
+                                <strong>{{item.item_name}} + </strong>
+                                <strong id="item_level_owned">{{item.item_level}}</strong>
+                            </p>
+                            <span class="status">(적용중)</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <h4>Shield</h4>
+        <div class="item-list">
+            {% for item in equipment_items %}
+                {% if item.category == 'shield' %}
+                    <div class="item">
+                        {% if item.upgrade_select == False %}
+                            {% if item.item_level < 11 %}
+                                <img src="{% static 'image/shield_1.webp' %}" alt="" width="100" id="">
+                            {% elif item.item_level < 21 %}
+                                <img src="{% static 'image/shield_2.webp' %}" alt="" width="100" id="">
+                            {% elif item.item_level < 26 %}
+                                <img src="{% static 'image/shield_3.webp' %}" alt="" width="100" id="">
+                            {% endif %}
+                            <p class="item-name"><strong>{{ item.item_name }} + {{ item.item_level }}</strong></p>
+                            <a href="{% url 'Blacksmith_Select' item.id %}" class="select-button">선택하기</a>
+                        {% else %}
+                            {% if item.item_level < 11 %}
+                                <img src="{% static 'image/shield_1.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% elif item.item_level < 21 %}
+                                <img src="{% static 'image/shield_2.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% elif item.item_level < 26 %}
+                                <img src="{% static 'image/shield_3.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% endif %}
+                            <p class="item-name">
+                                <strong>{{item.item_name}} + </strong>
+                                <strong id="item_level_owned">{{item.item_level}}</strong>
+                            </p>
+                            <span class="status">(적용중)</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <h4>Armor</h4>
+        <div class="item-list">
+            {% for item in equipment_items %}
+                {% if item.category == 'armor' %}
+                    <div class="item">
+                        {% if item.upgrade_select == False %}
+                            {% if item.item_level < 11 %}
+                                <img src="{% static 'image/armor_1.webp' %}" alt="" width="100" id="">
+                            {% elif item.item_level < 21 %}
+                                <img src="{% static 'image/armor_2.webp' %}" alt="" width="100" id="">
+                            {% elif item.item_level < 26 %}
+                                <img src="{% static 'image/armor_3.webp' %}" alt="" width="100" id="">
+                            {% endif %}
+                            <p class="item-name"><strong>{{ item.item_name }} + {{ item.item_level }}</strong></p>
+                            <a href="{% url 'Blacksmith_Select' item.id %}" class="select-button">선택하기</a>
+                        {% else %}
+                            {% if item.item_level < 11 %}
+                                <img src="{% static 'image/armor_1.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% elif item.item_level < 21 %}
+                                <img src="{% static 'image/armor_2.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% elif item.item_level < 26 %}
+                                <img src="{% static 'image/armor_3.webp' %}" alt="" width="100" id="item_image_owned">
+                            {% endif %}
+                            <p class="item-name">
+                                <strong>{{item.item_name}} + </strong>
+                                <strong id="item_level_owned">{{item.item_level}}</strong>
+                            </p>
+                            <span class="status">(적용중)</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const upgradeButton = document.querySelector('.upgrade-button');
+    const repeatUpgradeButton = document.getElementById('repeatUpgrade');
+
+    let interval;  // setInterval을 저장할 변수
+    let isUpgrading = false;  // 업그레이드 진행 여부
+    let upgradeCount = 0;  // 강화 횟수 추적 변수
+
+    if (upgradeButton) {
+        // 강화하기 버튼 클릭 이벤트
+        upgradeButton.addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 링크 동작 방지
+
+            // 클릭한 후 버튼 비활성화 (중복 클릭 방지)
+            upgradeButton.disabled = true;
+
+            const itemId = this.getAttribute('data-item-id');
+            const url = "{% url 'Blacksmith_Upgrade' '0' %}".replace('0', itemId); // URL 설정
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}' // CSRF 토큰 포함
+                },
+                body: JSON.stringify({}) // 필요한 데이터 전송
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 서버에서의 응답 처리
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // 업데이트된 정보 반영
+                    document.getElementById('money').innerText = data.new_money;
+
+                    // 아이템이 파괴되었는지 확인
+                    if (data.destroyed) {
+                        alert('아이템이 파괴되었습니다.');
+                        location.reload();  // 페이지 새로고침
+                    } else {
+                        // 아이템 정보 업데이트
+                        document.getElementById('item_level').innerText = data.item_level;
+                        document.getElementById('item_level_owned').innerText = data.item_level;
+                        if (data.item_category == 'sword') {
+                            document.getElementById('item_attack').innerText = data.item_attack;
+                        }
+                        else if (data.item_category == 'shield') {
+                            document.getElementById('item_defense').innerText = data.item_defense;
+                        }
+                        else if (data.item_category == 'armor') {
+                            document.getElementById('item_health').innerText = data.item_health;
+                        }
+                        document.getElementById('probability').innerText = data.probability + '%';
+                        document.getElementById('value').innerText = data.value || document.getElementById('value').innerText;
+                        document.getElementById('upgrade_cost').innerText = data.upgrade_cost + '원';
+
+                        // 이미지 업데이트
+                        const itemImage = document.getElementById('item_image');
+                        if (data.item_level < 6 && data.item_category == 'sword') {
+                            itemImage.src = "{% static 'image/sword_1.webp' %}";
+                        } else if (data.item_level < 11 && data.item_category == 'sword') {
+                            itemImage.src = "{% static 'image/sword_2.webp' %}";
+                        } else if (data.item_level < 16 && data.item_category == 'sword') {
+                            itemImage.src = "{% static 'image/sword_3.webp' %}";
+                        } else if (data.item_level < 21 && data.item_category == 'sword') {
+                            itemImage.src = "{% static 'image/sword_4.webp' %}";
+                        } else if (data.item_level < 26 && data.item_category == 'sword') {
+                            itemImage.src = "{% static 'image/sword_5.webp' %}";
+                        } else if (data.item_level < 11 && data.item_category == 'shield') {
+                            itemImage.src = "{% static 'image/shield_1.webp' %}";
+                        } else if (data.item_level < 21 && data.item_category == 'shield') {
+                            itemImage.src = "{% static 'image/shield_2.webp' %}";
+                        } else if (data.item_level < 26 && data.item_category == 'shield') {
+                            itemImage.src = "{% static 'image/shield_3.webp' %}";
+                        } else if (data.item_level < 11 && data.item_category == 'armor') {
+                            itemImage.src = "{% static 'image/armor_1.webp' %}";
+                        } else if (data.item_level < 21 && data.item_category == 'armor') {
+                            itemImage.src = "{% static 'image/armor_2.webp' %}";
+                        } else if (data.item_level < 26 && data.item_category == 'armor') {
+                            itemImage.src = "{% static 'image/armor_3.webp' %}";
+                        }
+
+                        const itemImage_owned = document.getElementById('item_image_owned');
+                        if (data.item_level < 6 && data.item_category == 'sword') {
+                            itemImage_owned.src = "{% static 'image/sword_1.webp' %}";
+                        } else if (data.item_level < 11 && data.item_category == 'sword') {
+                            itemImage_owned.src = "{% static 'image/sword_2.webp' %}";
+                        } else if (data.item_level < 16 && data.item_category == 'sword') {
+                            itemImage_owned.src = "{% static 'image/sword_3.webp' %}";
+                        } else if (data.item_level < 21 && data.item_category == 'sword') {
+                            itemImage_owned.src = "{% static 'image/sword_4.webp' %}";
+                        } else if (data.item_level < 26 && data.item_category == 'sword') {
+                            itemImage_owned.src = "{% static 'image/sword_5.webp' %}";
+                        } else if (data.item_level < 11 && data.item_category == 'shield') {
+                            itemImage_owned.src = "{% static 'image/shield_1.webp' %}";
+                        } else if (data.item_level < 21 && data.item_category == 'shield') {
+                            itemImage_owned.src = "{% static 'image/shield_2.webp' %}";
+                        } else if (data.item_level < 26 && data.item_category == 'shield') {
+                            itemImage_owned.src = "{% static 'image/shield_3.webp' %}";
+                        } else if (data.item_level < 11 && data.item_category == 'armor') {
+                            itemImage_owned.src = "{% static 'image/armor_1.webp' %}";
+                        } else if (data.item_level < 21 && data.item_category == 'armor') {
+                            itemImage_owned.src = "{% static 'image/armor_2.webp' %}";
+                        } else if (data.item_level < 26 && data.item_category == 'armor') {
+                            itemImage_owned.src = "{% static 'image/armor_3.webp' %}";
+                        }
+
+                        // Max Level 처리
+                        const maxLevelMessage = document.getElementById('max-level-message');
+                        if (data.item_level === 25) {
+                            maxLevelMessage.innerText = ' Max Level';
+                            upgradeButton.style.display = 'none'; // 버튼 숨기기
+                        } else {
+                            maxLevelMessage.innerText = ''; // 초기화
+                            upgradeButton.style.display = 'inline'; // 버튼 보이기
+                        }
+
+                        // 보호 상태 업데이트
+                        const protectionStatus = document.getElementById('protection-status');
+                        if (data.protected) {
+                            protectionStatus.innerText = '(파괴방지)';
+                        } else {
+                            protectionStatus.innerText = ''; // 보호 상태가 없을 경우 빈 문자열
+                        }
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('강화 요청 실패:', error);
+                alert('강화 실패: ' + error.message);
+            })
+            .finally(() => {
+                // 요청이 끝나면 버튼 활성화
+                upgradeButton.disabled = false;
+            });
+        });
+
+        // 5번 강화 버튼 클릭 이벤트
+        if (repeatUpgradeButton) {
+            repeatUpgradeButton.addEventListener('click', function(event) {
+                event.preventDefault(); // 기본 링크 동작 방지
+
+                // 강화가 진행 중이 아니면 5번 강화 시작
+                if (!isUpgrading) {
+                    isUpgrading = true;
+                    upgradeButton.disabled = true;  // 버튼 비활성화하여 중복 클릭 방지
+                    upgradeCount = 0;  // 강화 횟수 초기화
+
+                    // 반복적으로 100번 강화
+                    interval = setInterval(function() {
+                        if (upgradeCount < 5) {
+                            upgradeButton.click();  // 강화하기 버튼 클릭
+                            upgradeCount++;
+                        } else {
+                            clearInterval(interval);  // 5번이 끝나면 멈추기
+                            isUpgrading = false;
+                            upgradeButton.disabled = false;  // 강화 완료 후 버튼 활성화
+                        }
+                    }, 50);  // 0.02초 간격으로 강화 (50번/초)
+                }
+            });
+        }
+    }
+});
+</script>
+{% endif %}
+
+
+
+<!-- Mushroom_Page -->
+{% if trigger_mushroom %}
+    <link rel="stylesheet" href="{% static 'css/mushroom.css' %}">
+    <div class="mushroom-container">
+
+        <div class="page-header">
+            <h2 class="mushroom-title">버섯 캐기</h2>
+            <a href="{% url 'Index_Page' %}" class="back-button">뒤로가기</a>
+        </div>
+
+        <div class="mushroom-list">
+            {% for mushroom in mushrooms %}
+                <div class="mushroom-item" id="mushroom-{{ mushroom.id }}">
+                    <h3>Lv. {{ mushroom.level }} - {{ mushroom.name }}
+                        {% if mushroom.name == '송이버섯' %}
+                            1000원
+                        {% elif mushroom.name == '표고버섯' %}
+                            3000원
+                        {% elif mushroom.name == '팽이버섯' %}
+                            10000원
+                        {% elif mushroom.name == '느타리버섯' %}
+                            25000원
+                        {% elif mushroom.name == '목이버섯' %}
+                            50000원
+                        {% endif %}
+                    </h3>
+                    <img src="{% static 'image/mushroom_1.jpeg' %}" alt="" width="100px">
+                    <p>HP: <strong class="mushroom-health">{{ mushroom.health }}</strong></p>
+                    <a href="#" class="attack-button" data-mushroom-id="{{ mushroom.id }}">공격하기</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="bottom-floating-box">
+        <span>소지금: <strong id="money">{{ user.money }}원</strong></span>
+            {% if equip_item %}
+                <strong>공격력 : {{ total_attack }}</strong>
+            {% else %}
+                <span style="color: red">무기를 장착하세요</span>
+            {% endif %}
+        </strong></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const attackButtons = document.querySelectorAll('.attack-button');
+
+            attackButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // 기본 링크 동작 방지
+                    const mushroomId = this.getAttribute('data-mushroom-id');
+                    const url = "{% url 'Mushroom_Attack' '0' total_attack %}".replace('0', mushroomId); // URL 설정
+
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}' // CSRF 토큰 포함
+                        },
+                        body: JSON.stringify({
+                            attack: {{ total_attack }}  // 공격력 포함
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // 서버에서의 응답 처리
+                        document.getElementById('money').innerText = data.new_money + '원';
+                        const mushroomItem = document.getElementById('mushroom-' + mushroomId);
+                        mushroomItem.querySelector('.mushroom-health').innerText = data.new_health;
+
+                        if (data.message) {
+                            alert(data.message); // 성공 메시지 또는 게임 종료 메시지 표시
+                        }
+                    })
+                    .catch(error => {
+                        console.error('공격 요청 실패:', error);
+                        alert('공격 실패: ' + error.message);
+                    });
+                });
+            });
+        });
+    </script>
+{% endif %}
+
+
+
+<!-- Blackjack_Page -->
+{% if trigger_blackjack %}
+        <h2>블랙잭</h2>
+        <a href = "{% url 'Index_Page' %}">뒤로가기</a> <a href = "{% url 'Restart' %}">재시작</a>
+        <br><br>
+        {% if dealer_turns < 2 %}
+            딜러 <a href = "{% url 'Card_Dealing' %}">카드 분배하기</a>
+        {% elif dealer_turns == 2 %}
+            딜러
+        {% elif dealer_turns == 3 %}
+            딜러 <a href = "{% url 'Last_Turn' %}">마지막 턴</a>
+        {% elif dealer_turns == 4 %}
+            딜러
+        {% endif %}
+        <br>
+
+
+        <!-- dealer -->
+        {% if dealer_turns < 3 %}
+            {% for card in dealer_cards %}
+                {% if forloop.counter == 2 %}
+                    <img src = "{% static 'image/back.jpg' %}" alt="" width="90">
+                {% else %}
+                    <img src = "{% static 'image/' %}{{ card.number }}.jpg.avif" alt="" width="100">
+                {% endif %}
+            {% endfor %}
+            <br><br>
+        {% elif dealer_turns == 3 %}
+            {% for card in dealer_cards %}
+                <img src = "{% static 'image/' %}{{ card.number }}.jpg.avif" alt="" width="100">
+            {% endfor %}
+            <br><br>
+        {% elif dealer_turns == 4 %}
+            {% for card in dealer_cards %}
+                <img src = "{% static 'image/' %}{{ card.number }}.jpg.avif" alt="" width="100">
+            {% endfor %}
+            합계 : {{ dealer_hand_total }}
+            <br><br>
+        {% endif %}
+
+
+        <!-- player -->
+        {% if dealer_turns < 2 %}
+            플레이어
+            <br>
+            {% for card in player_cards %}
+                <img src = "{% static 'image/' %}{{ card.number }}.jpg.avif" alt="" width="100">
+            {% endfor %}
+            <br>
+        {% elif dealer_turns == 2 %}
+            {% if player_hand_total < 22 %}
+                플레이어 <a href = "{% url 'Hit' %}">히트(카드 한장 더 받기)</a> / <a href = "{% url 'Stand' %}">스탠드(카드 유지하고 턴 넘기기)</a>
+            {% else %}
+                플레이어 (패배) 합계 : {{ player_hand_total }}
+            {% endif %}
+            <br>
+            {% for card in player_cards %}
+                <img src = "{% static 'image/' %}{{ card.number }}.jpg.avif" alt="" width="100">
+            {% endfor %}
+            <br>
+        {% elif dealer_turns == 3 %}
+            플레이어
+            <br>
+            {% for card in player_cards %}
+                <img src = "{% static 'image/' %}{{ card.number }}.jpg.avif" alt="" width="100">
+            {% endfor %}
+            <br>
+        {% elif dealer_turns == 4%}
+            플레이어
+            <br>
+            {% for card in player_cards %}
+                <img src = "{% static 'image/' %}{{ card.number }}.jpg.avif" alt="" width="100">
+            {% endfor %}
+            합계 : {{ player_hand_total }}
+            <br>
+        {% endif %}
+        <br>
+
+        {% if dealer_turns == 4 %}
+            {% if result_message %}
+                {{ result_message }}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+
+
+<!-- Rock_Paper_Scissors_Page -->
+{% if trigger_rps %}
+    <link rel="stylesheet" href="{% static 'css/rock_paper_scissors.css' %}">
+    <div class="game-container">
+        <h2>가위바위보</h2>
+        <a class="back-button" href="{% url 'Index_Page' %}">뒤로가기</a>
+
+        <div class="user-info">
+            <p><strong>소지금:</strong> {{ user.money }}원</p>
+        </div>
+        <div class="game-choices">
+            {% if dealer_choice %}
+                {% if dealer_choice == '가위' %}
+                    <img src = "{% static 'image/reverse_scissors.jpeg' %}" alt="" width="100">
+                {% elif dealer_choice == '바위' %}
+                    <img src = "{% static 'image/reverse_rock.jpeg' %}" alt="" width="100">
+                {% elif dealer_choice == '보' %}
+                    <img src = "{% static 'image/reverse_paper.jpeg' %}" alt="" width="100">
+                {% endif %}
+            {% endif %}
+            <br>
+            {% if user_choice %}
+                {% if user_choice == '가위' %}
+                    <img src = "{% static 'image/scissors.jpeg' %}" alt="" width="100">
+                {% elif user_choice == '바위' %}
+                    <img src = "{% static 'image/rock.jpeg' %}" alt="" width="100">
+                {% elif user_choice == '보' %}
+                    <img src = "{% static 'image/paper.jpeg' %}" alt="" width="100">
+            {% endif %}
+                <br>
+                {% if result_message %}
+                    <p class="result-message">{{ result_message }}</p>
+                {% endif %}
+                <a class="play-again-button" href="{% url 'Rock_Paper_Scissors_Page' %}">다시하기</a>
+            {% else %}
+                <p>선택하세요:</p>
+                <div class="choice-buttons">
+                    <a class="choice-button" href="{% url 'Rock_Paper_Scissors_Play' user.id %}?user_choice=가위">
+                        <img src = "{% static 'image/scissors.jpeg' %}" alt="" width="100">
+                    </a>
+
+                    <a class="choice-button" href="{% url 'Rock_Paper_Scissors_Play' user.id %}?user_choice=바위">
+                        <img src = "{% static 'image/rock.jpeg' %}" alt="" width="100">
+                    </a>
+                    <a class="choice-button" href="{% url 'Rock_Paper_Scissors_Play' user.id %}?user_choice=보">
+                        <img src = "{% static 'image/paper.jpeg' %}" alt="" width="100">
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+
+</body>
+</html>

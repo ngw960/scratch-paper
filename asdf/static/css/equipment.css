@@ -1,0 +1,202 @@
+/* 기본 텍스트 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #FFFFFF;
+    color: #000000;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 장비 페이지 헤더 */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.equipment-title {
+    color: #000;
+    font-size: 2em;
+}
+
+/* 뒤로가기 버튼 */
+.back-button {
+    padding: 10px 15px;
+    color: #FFFFFF;
+    background-color: #000;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #333333;
+}
+
+/* 사용자 정보 */
+.user-info {
+    text-align: left; /* 왼쪽 정렬 */
+    margin-bottom: 30px;
+}
+
+
+/* 장착중인 아이템 */
+.equipped-items {
+    margin-bottom: 30px;
+}
+
+.equipped-items .item {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* 보유 아이템 스타일 */
+.owned-items {
+    margin-top: 20px;
+}
+
+/* 아이템 리스트 */
+.item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 각 아이템 스타일 */
+.item {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+/* 아이템 이름 */
+.item-name {
+    flex-grow: 1;
+    text-align: center;
+    padding: 0 10px;
+}
+
+/* 장착하기 버튼 */
+.equip-button {
+    padding: 10px 15px;
+    color: #FFFFFF;
+    background-color: #000000;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.equip-button:hover {
+    background-color: #333333;
+}
+
+/* 모바일에서 텍스트 크기 줄이기 */
+@media screen and (max-width: 767px) {
+    /* 제목 */
+    .equipment-title {
+        font-size: 1.5em;  /* 작은 화면에서 제목 크기 줄이기 */
+    }
+
+    /* 사용자 정보 */
+    .user-info h3 {
+        font-size: 1.2em; /* 사용자 정보 제목 크기 줄이기 */
+    }
+
+    .user-info p {
+        font-size: 0.9em; /* 사용자 정보 내용 텍스트 크기 줄이기 */
+    }
+
+    /* 장비 아이템 제목 */
+    .equipped-items h3, .owned-items h3 {
+        font-size: 1.3em;  /* 제목 크기 줄이기 */
+    }
+
+    /* 장비 아이템 리스트 내 텍스트 */
+    .item-list h4 {
+        font-size: 1.1em; /* 아이템 구분 제목 크기 줄이기 */
+    }
+
+    .item-name {
+        font-size: 0.9em;  /* 아이템 이름 크기 줄이기 */
+    }
+
+    /* 아이템들 */
+    .item {
+        padding: 12px;
+        font-size: 0.9em; /* 아이템 내용 텍스트 크기 줄이기 */
+    }
+
+    .equip-button {
+        font-size: 0.9em;  /* 버튼 텍스트 크기 줄이기 */
+    }
+
+    .equipped {
+        font-size: 0.9em; /* 착용중 표시 텍스트 크기 줄이기 */
+    }
+}
+
+/* 데스크탑 레이아웃 (1024px 이상) */
+@media screen and (min-width: 1024px) {
+    .item-list {
+        flex-direction: row; 
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .item {
+        width: calc(33% - 20px); 
+    }
+
+    /* 장비 아이템 제목 텍스트 크기 조정 */
+    .owned-items h4 {
+        font-size: 1.3em;
+    }
+
+    /* 아이템 이름 및 버튼 텍스트 크기 조정 */
+    .item-name {
+        font-size: 1.1em;
+    }
+
+    .equip-button {
+        font-size: 1em;
+    }
+}
+
+/* 태블릿 레이아웃 (768px ~ 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .item-list {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .item {
+        width: calc(50% - 15px);
+    }
+
+    /* 장비 아이템 제목 텍스트 크기 조정 */
+    .owned-items h4 {
+        font-size: 1.2em;
+    }
+
+    /* 아이템 이름 및 버튼 텍스트 크기 조정 */
+    .item-name {
+        font-size: 1em;
+    }
+
+    .equip-button {
+        font-size: 1em;
+    }
+}

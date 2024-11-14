@@ -1,0 +1,140 @@
+/* 전체 컨테이너 스타일 */
+.game-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* 패딩과 경계선이 포함되도록 설정 */
+}
+
+/* 제목 스타일 */
+h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #444;
+    font-weight: bold; /* 강조 효과 */
+}
+
+/* 뒤로가기 버튼 스타일 */
+.back-button {
+    position: absolute; /* 절대 위치 설정 */
+    top: 20px; /* 상단 여백 */
+    left: 20px; /* 왼쪽 여백 */
+    padding: 10px 15px; /* 안쪽 여백 */
+    color: #FFFFFF; /* 흰색 글씨 */
+    background-color: #000000; /* 검은색 배경 */
+    border-radius: 5px; /* 둥근 모서리 */
+    text-decoration: none; /* 밑줄 제거 */
+    transition: background-color 0.3s, box-shadow 0.3s; /* 호버 효과 전환 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+    background-color: #555;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 추가 */
+}
+
+/* 소지금 정보 스타일 */
+.user-info p {
+    font-size: 1.2em;
+    margin: 10px 0;
+    font-weight: bold; /* 강조 */
+}
+
+/* 선택지 버튼 스타일 */
+.choice-buttons {
+    display: flex; /* 플렉스 박스를 사용 */
+    flex-wrap: wrap; /* 버튼들이 한 줄에 꽉 차지 않으면 다음 줄로 넘어가도록 설정 */
+    justify-content: space-between; /* 버튼들 간의 간격을 동일하게 분배 */
+    margin-top: 20px;
+    width: 100%; /* 버튼이 부모 컨테이너에 맞게 채워지도록 설정 */
+    box-sizing: border-box; /* 부모 컨테이너 크기에 맞게 조정 */
+}
+
+.choice-button {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px 0; /* 간격을 좀 더 여유 있게 조정 */
+    width: calc(33.33% - 20px); /* 한 줄에 3개씩 배치되도록 설정, 간격을 고려하여 33.33%로 설정 */
+    background-color: #000;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-sizing: border-box; /* 버튼 내 패딩과 경계선 포함 */
+}
+
+.choice-button:hover {
+    background-color: #555;
+    transform: scale(1.05); /* 호버 시 약간 크기 확대 */
+}
+
+/* 다시하기 버튼 스타일 */
+.play-again-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #000;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: calc(33.33% - 20px); /* 한 줄에 3개씩 배치되도록 설정, 간격을 고려하여 33.33%로 설정 */
+    max-width: 100px; /* 최대 너비 제한 */
+    box-sizing: border-box;
+}
+
+.play-again-button:hover {
+    background-color: #555;
+    transform: scale(1.05); /* 크기 확장 효과 */
+}
+
+/* 결과 메시지 스타일 */
+.result-message {
+    font-size: 1.5em;
+    color: #ff6347; /* Tomato color for result */
+    margin-top: 20px;
+    animation: fadeIn 1s ease-out; /* 메시지가 서서히 나타나는 효과 */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 딜러와 사용자의 선택 표시 */
+.game-choices p {
+    font-size: 1.2em;
+    margin: 10px 0;
+    font-weight: bold; /* 강조 효과 */
+    color: #333;  /* 다소 강조된 색상 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .choice-button, .play-again-button {
+        width: 100%; /* 버튼이 가로로 꽉 찼으면 좋겠다면 */
+        margin: 10px 0;
+        max-width: 100%; /* 최대 너비 제한을 없애서 화면 크기에 맞게 조정 */
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+}

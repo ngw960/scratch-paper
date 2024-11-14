@@ -1,0 +1,161 @@
+/* 기본 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #000;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 버섯 페이지 헤더 */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.mushroom-title {
+    color: #000;
+    font-size: 2em;
+}
+
+/* 뒤로가기 버튼 */
+.back-button {
+    padding: 10px 15px;
+    color: #FFFFFF;
+    background-color: #000;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #555;
+}
+
+/* 플로팅 박스 */
+.floating-box {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #000;
+    color: #FFFFFF;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 버섯 리스트 컨테이너 */
+.mushroom-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 버섯 아이템 */
+.mushroom-item {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mushroom-item h3 {
+    color: #000;
+    margin: 0 0 10px;
+}
+
+.mushroom-item img {
+    margin-bottom: 10px;
+}
+
+.mushroom-health {
+    color: #000;
+    font-weight: bold;
+}
+
+/* 공격하기 버튼 */
+.attack-button {
+    padding: 10px 15px;
+    color: #FFFFFF;
+    background-color: #000;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.attack-button:hover {
+    background-color: #555;
+}
+
+/* 하단 고정 플로팅 박스 */
+.bottom-floating-box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000;
+    color: #FFFFFF;
+    padding: 15px;
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.bottom-floating-box span {
+    margin: 0 10px;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 767px) {
+    .mushroom-title {
+        font-size: 1.5em;
+    }
+
+    .mushroom-item h3 {
+        font-size: 1.1em;
+    }
+
+    .attack-button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .mushroom-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .mushroom-item {
+        width: calc(50% - 15px);
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .mushroom-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .mushroom-item {
+        width: calc(33.333% - 20px);
+    }
+}

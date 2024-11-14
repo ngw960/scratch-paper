@@ -1,0 +1,179 @@
+/* 기본 텍스트 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #FFFFFF;
+    color: #000000;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 상점 페이지 헤더 */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.shop-title {
+    color: #000;
+    font-size: 2em;
+}
+
+/* 뒤로가기 버튼 */
+.back-button {
+    padding: 10px 15px;
+    color: #FFFFFF;
+    background-color: #000;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #333333;
+}
+
+/* 사용자 정보 */
+.user-info {
+    text-align: left; /* 왼쪽 정렬 */
+    margin-bottom: 30px;
+}
+
+/* 판매 아이템 목록 */
+.item-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* 각 아이템 스타일 */
+.item {
+    width: calc(33% - 20px);
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.item p {
+    font-size: 1em;
+    margin: 10px 0;
+}
+
+.buy-button {
+    padding: 10px 15px;
+    color: #FFFFFF;
+    background-color: #000000; /* 검은색 버튼 */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.buy-button:hover {
+    background-color: #333333;
+}
+
+/* 보유중인 아이템 */
+.owned-items {
+    margin-top: 30px;
+}
+
+/* 보유 아이템 개별 항목 스타일 */
+.owned-item {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.owned-item p {
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+
+.sell-button {
+    padding: 5px 10px;
+    color: #FFFFFF;
+    background-color: #000000; /* 검은색 버튼 */
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.sell-button:hover {
+    background-color: #333333;
+}
+
+/* 모바일에서 텍스트 크기 줄이기 */
+@media screen and (max-width: 767px) {
+    .shop-title {
+        font-size: 1.5em;
+    }
+
+    .user-info p {
+        font-size: 1em;
+    }
+
+    .item-list {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .item {
+        width: 100%;
+    }
+
+    .item-name, .buy-button, .sell-button {
+        font-size: 0.9em;
+    }
+}
+
+/* 데스크탑 레이아웃 (1024px 이상) */
+@media screen and (min-width: 1024px) {
+    .item-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .item {
+        width: calc(33% - 20px);
+    }
+
+    .buy-button, .sell-button {
+        font-size: 1em;
+    }
+}
+
+/* 태블릿 레이아웃 (768px ~ 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .item-list {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .item {
+        width: calc(50% - 15px);
+    }
+
+    .buy-button, .sell-button {
+        font-size: 1em;
+    }
+}

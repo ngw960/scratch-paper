@@ -1,0 +1,248 @@
+/* 기본 텍스트 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000000; /* 전체 배경을 검은색으로 */
+    color: #FFFFFF;  /* 모든 텍스트를 하얀색으로 */
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 배경 동영상 스타일 */
+.video-background {
+    position: fixed; /* 화면에 고정된 위치 */
+    top: 0;
+    left: 0;
+    width: 100vw;  /* 뷰포트 너비를 100%로 설정 */
+    height: 100vh;  /* 뷰포트 높이를 100%로 설정 */
+    object-fit: cover; /* 동영상이 화면을 꽉 채우도록 설정 */
+    z-index: -1; /* 모든 콘텐츠 뒤에 위치 */
+    opacity: 0.9; /* 배경 동영상의 투명도를 조금 줄여서 텍스트가 잘 보이도록 */
+}
+
+/* 대장간 페이지 헤더 */
+.page-header {
+    display: flex;
+    justify-content: space-between; /* 왼쪽과 오른쪽 끝에 배치 */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* 대장간 제목 (왼쪽 정렬) */
+.blacksmith-title {
+    color: #FFFFFF;
+    font-size: 2em;
+    margin: 0;
+}
+
+/* 뒤로가기 버튼 (오른쪽 정렬) */
+.back-button {
+    padding: 10px 15px;
+    color: #FFFFFF;
+    background-color: #000;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin: 0;  /* 기본 여백 제거 */
+}
+
+.back-button:hover {
+    background-color: #333333;
+}
+
+/* 업그레이드 버튼 스타일 */
+.upgrade-button {
+    padding: 10px 20px;
+    color: #FFFFFF;
+    background-color: #000;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;  /* 버튼을 인라인 블록으로 설정 */
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.upgrade-button:hover {
+    background-color: #555;
+}
+
+/* 유저 머니 섹션 */
+.user-money {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+/* 페이지 콘텐츠 (Flexbox로 레이아웃 조정) */
+.page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* 아이템 강화 섹션 */
+.upgrade-item {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* 사용자 정보 섹션 */
+.user-info {
+    text-align: center;
+}
+
+/* 경고 메시지 */
+.warning-text {
+    text-align: center;
+    color: red;
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+/* 아이템 표시 */
+.item-display {
+    margin-bottom: 20px;
+}
+
+.item-display img {
+    width: 100px;
+    height: auto;
+}
+
+#item-description {
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+/* 아이템 목록 */
+.owned-items {
+    margin-top: 20px;
+}
+
+.item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 각 아이템 스타일 */
+.item {
+    padding: 15px;
+    background-color: #222222;  /* 아이템 컨테이너 배경을 어두운 색으로 */
+    border: 1px solid #000000;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;  /* 텍스트 색을 하얀색으로 */
+}
+
+/* 아이템 이름 */
+.item-name {
+    flex-grow: 1;
+    text-align: center;
+    padding: 0 10px;
+}
+
+/* 선택하기 버튼 */
+.select-button {
+    padding: 10px 15px;
+    color: #FFFFFF;
+    background-color: #000000;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.select-button:hover {
+    background-color: #333333;
+}
+
+/* 모바일에서 텍스트 크기 줄이기 */
+@media screen and (max-width: 767px) {
+    .blacksmith-title {
+        font-size: 1.5em;
+    }
+
+    .user-money p {
+        font-size: 1em;
+    }
+
+    .upgrade-item h3, .owned-items h3 {
+        font-size: 1.3em;
+    }
+
+    .item-name {
+        font-size: 0.9em;
+    }
+
+    .item {
+        padding: 12px;
+        font-size: 0.9em;
+    }
+
+    .select-button {
+        font-size: 0.9em;
+    }
+}
+
+/* 데스크탑 레이아웃 (1024px 이상) */
+@media screen and (min-width: 1024px) {
+    .page-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .upgrade-item {
+        flex: 2;
+        margin-right: 20px;
+    }
+
+    .user-info {
+        flex: 1;
+        margin-left: -100px;
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .item-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .item {
+        width: calc(33% - 20px);
+    }
+
+    .item-name {
+        font-size: 1em;
+    }
+
+    .select-button {
+        font-size: 1em;
+    }
+}
+
+/* 태블릿 레이아웃 (768px ~ 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .item-list {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .item {
+        width: calc(50% - 15px);
+    }
+
+    .item-name {
+        font-size: 1em;
+    }
+
+    .select-button {
+        font-size: 1em;
+    }
+}
