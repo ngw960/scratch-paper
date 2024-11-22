@@ -1,8 +1,6 @@
 # ScratchPaper
 
-이 프로젝트는 **Django** 웹 프레임워크를 사용하여 만든 웹 애플리케이션입니다.
-
-## 웹 프레임워크: Django (Python)
+## 웹 프레임워크: FastAPI (Python)
 
 ### 언어 ###
 - **Python**
