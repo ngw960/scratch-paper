@@ -2,7 +2,7 @@
 
 ## 웹 프레임워크: Django (Python)
 
-### 언어 ###
+## 언어 ##
 - **Python**
 - **JavaScript**
 - **HTML**
