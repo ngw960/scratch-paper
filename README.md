@@ -1,6 +1,6 @@
 # ScratchPaper
 
-## 웹 프레임워크: FastAPI (Python)
+## 웹 프레임워크: Django (Python)
 
 ### 언어 ###
 - **Python**
